@@ -9,7 +9,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 
@@ -34,7 +33,7 @@ const Navbar = () => {
           </Link>
 
           {/* User Dropdown */}
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 rounded-full border px-2 py-2 hover:bg-gray-100 transition">
                 <User size={16} />
@@ -63,7 +62,12 @@ const Navbar = () => {
                 <LogOut size={16} /> Log out
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
+          <Link href="/register"
+            className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-white hover:bg-indigo-700"
+          >
+            Register
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
