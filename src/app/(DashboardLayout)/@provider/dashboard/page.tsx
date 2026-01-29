@@ -1,7 +1,7 @@
 
 const ProviderDashboard = () => {
   return (
-    <div>admin dashboard</div>
+    <div>Provider dashboard</div>
   )
 }
 
