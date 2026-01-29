@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+const API_BASE_URL = "http://localhost:4000/api";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,16 +16,42 @@ export default function RegisterPage() {
     role: "CUSTOMER",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // API integration later
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      // ✅ success → redirect to login
+      router.push("/login");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +66,13 @@ export default function RegisterPage() {
             Join FoodHub and start ordering delicious meals
           </p>
         </div>
+
+        {/* Error */}
+        {error && (
+          <div className="mb-4 rounded bg-red-100 px-3 py-2 text-sm text-red-600">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -97,19 +135,22 @@ export default function RegisterPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded bg-indigo-600 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 transition"
+            disabled={loading}
+            className={`w-full rounded py-2.5 text-sm font-medium text-white transition
+              ${
+                loading
+                  ? "bg-indigo-400 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700"
+              }`}
           >
-            Register
+            {loading ? "Creating account..." : "Register"}
           </button>
         </form>
 
         {/* Footer */}
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-indigo-600 hover:underline"
-          >
+          <Link href="/login" className="text-indigo-600 hover:underline">
             Login
           </Link>
         </p>
