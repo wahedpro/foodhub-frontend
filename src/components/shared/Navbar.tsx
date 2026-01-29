@@ -11,9 +11,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { useAuth } from "@/src/context/AuthContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <nav className="w-full border-b bg-white sticky top-0 z-50">
@@ -33,43 +35,47 @@ const Navbar = () => {
           </Link>
 
           {/* User Dropdown */}
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 rounded-full border px-2 py-2 hover:bg-gray-100 transition">
-                <User size={16} />
-              </button>
-            </DropdownMenuTrigger>
-            
-            <DropdownMenuContent
-              align="end"
-              className="w-48 rounded-lg border bg-white p-2 shadow-lg flex flex-col gap-1"
+
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 rounded-full border px-2 py-2 hover:bg-gray-100 transition">
+                  <User size={16} />
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent
+                align="end"
+                className="w-48 rounded-lg border bg-white p-2 shadow-lg flex flex-col gap-1"
+              >
+                <DropdownMenuItem className="gap-2 cursor-pointer  hover:bg-gray-100 py-1 px-1 rounded-sm">
+                  <Link href="/profile" className="flex items-center gap-2">
+                    <User size={16} /> Profile
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
+                  <CreditCard size={16} /> Cart
+                </DropdownMenuItem>
+
+                <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
+                  <Settings size={16} /> Track Order
+                </DropdownMenuItem>
+
+                <DropdownMenuItem className=" hover:bg-gray-100 py-1 px-1 rounded-sm">
+                  <button onClick={logout} className="flex items-center gap-2 cursor-pointer "><LogOut size={16} /> Log out </button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link
+              href="/register"
+              className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-white hover:bg-indigo-700"
             >
-              <DropdownMenuItem className="gap-2 cursor-pointer  hover:bg-gray-100 py-1 px-1 rounded-sm">
-                <Link href="/profile" className="flex items-center gap-2">
-                  <User size={16} /> Profile
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
-                <CreditCard size={16} /> Cart
-              </DropdownMenuItem>
-
-              <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
-                <Settings size={16} /> Track Order
-              </DropdownMenuItem>
-
-              <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
-                <LogOut size={16} /> Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
-          <Link href="/register"
-            className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-white hover:bg-indigo-700"
-          >
-            Register
-          </Link>
+              Register
+            </Link>
+          )}
         </div>
-
         {/* Mobile Toggle */}
         <button
           className="md:hidden text-gray-700"

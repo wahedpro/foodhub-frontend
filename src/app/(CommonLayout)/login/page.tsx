@@ -2,12 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const router = useRouter();
+
+  const API_BASE_URL = "http://localhost:4000/api";
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -19,19 +24,47 @@ export default function LoginPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      // API integration later
-      console.log(formData);
-    } catch (err) {
-      setError("Invalid email or password");
-    } finally {
-      setLoading(false);
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
+
+    if (!res.ok) {
+      throw new Error(data.message || "Login failed");
     }
-  };
+
+    const token = data?.data?.token;
+
+    if (!token) {
+      throw new Error("Token not received from server");
+    }
+
+    // ✅ SAVE TOKEN
+    localStorage.setItem("token", token);
+
+    // 🔍 VERIFY SAVE
+    console.log("SAVED TOKEN:", localStorage.getItem("token"));
+
+    // redirect
+    router.push("/dashboard");
+  } catch (err: any) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
