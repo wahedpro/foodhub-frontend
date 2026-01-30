@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/src/context/AuthContext";
+import { useAuth } from "@/src/providers/AuthProvider";
 import { useEffect, useState } from "react";
 
 const API_BASE_URL = "http://localhost:4000/api";

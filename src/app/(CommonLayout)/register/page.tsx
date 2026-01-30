@@ -3,13 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { RegisterPayload } from "@/src/types/auth";
+import { registerUser } from "@/src/services/auth.service";
 
-const API_BASE_URL = "http://localhost:4000/api";
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegisterPayload>({
     name: "",
     email: "",
     password: "",
@@ -17,38 +18,31 @@ export default function RegisterPage() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError(null);
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Registration failed");
-      }
-
-      // ✅ success → redirect to login
+      await registerUser(formData);
       router.push("/login");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong");
+      }
     } finally {
       setLoading(false);
     }
@@ -76,63 +70,45 @@ export default function RegisterPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="text-sm text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+          <Input
+            label="Full Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="John Doe"
+          />
 
-          {/* Email */}
-          <div>
-            <label className="text-sm text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="example@email.com"
-              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+          <Input
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="example@email.com"
+          />
 
-          {/* Password */}
-          <div>
-            <label className="text-sm text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+          <Input
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="••••••••"
+          />
 
-          {/* Role */}
           <div>
             <label className="text-sm text-gray-700">Register As</label>
             <select
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
             >
               <option value="CUSTOMER">Customer</option>
               <option value="PROVIDER">Food Provider</option>
             </select>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
@@ -147,7 +123,6 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* Footer */}
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link href="/login" className="text-indigo-600 hover:underline">
@@ -156,5 +131,24 @@ export default function RegisterPage() {
         </p>
       </div>
     </section>
+  );
+}
+
+/* Small reusable input */
+function Input({
+  label,
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+}) {
+  return (
+    <div>
+      <label className="text-sm text-gray-700">{label}</label>
+      <input
+        {...props}
+        required
+        className="mt-1 w-full rounded border px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
   );
 }

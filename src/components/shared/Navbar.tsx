@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { useAuth } from "@/src/context/AuthContext";
+import { useAuth } from "@/src/providers/AuthProvider";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

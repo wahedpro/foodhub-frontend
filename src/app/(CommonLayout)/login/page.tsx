@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useAuth } from "@/src/context/AuthContext";
+import { useAuth } from "@/src/providers/AuthProvider";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
