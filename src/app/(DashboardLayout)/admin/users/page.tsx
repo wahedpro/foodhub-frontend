@@ -37,6 +37,8 @@ export default function AdminUsersPage() {
     }
   };
 
+  const visibleUsers = users.filter(user => user.role !== "ADMIN");
+
   if (loading) {
     return (
       <div className="p-6">
@@ -76,7 +78,7 @@ export default function AdminUsersPage() {
             </thead>
 
             <tbody>
-              {users.map((user) => (
+              {visibleUsers.map((user) => (
                 <tr key={user.id} className="border-t">
                   {/* Name */}
                   <td className="px-4 py-3 font-medium">
@@ -92,10 +94,8 @@ export default function AdminUsersPage() {
                   <td className="px-4 py-3">
                     <span
                       className={`rounded px-2 py-1 text-xs font-medium ${
-                        user.role === "ADMIN"
-                          ? "bg-purple-100 text-purple-700"
-                          : user.role === "PROVIDER"
-                          ? "bg-blue-100 text-blue-700"
+                        user.role === "PROVIDER"
+                          ? "bg-purple-100 text-blue-700"
                           : "bg-gray-100 text-gray-700"
                       }`}
                     >

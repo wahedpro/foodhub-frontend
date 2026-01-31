@@ -27,7 +27,7 @@ export const updateUserStatus = async (
   const token = localStorage.getItem("token");
 
   const res = await fetch(
-    `${API}/admin/users/${userId}/status`,
+    `${API}/admin/users/${userId}`,
     {
       method: "PATCH",
       headers: {
