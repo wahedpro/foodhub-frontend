@@ -59,7 +59,7 @@ export const updateMeal = async (
   const res = await fetch(
     `${API_URL}/v1/provider/meals/${mealId}`,
     {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

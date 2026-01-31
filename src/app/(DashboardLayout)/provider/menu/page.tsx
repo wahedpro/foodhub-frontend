@@ -31,7 +31,7 @@ export default function ProviderMenuPage() {
       setLoading(true);
       const allMeals = await getMeals();
 
-      // ✅ correct frontend filter
+      // correct frontend filter
       const providerMeals = allMeals.filter(
         (meal) => meal.provider.userId === user.id,
       );
@@ -73,7 +73,7 @@ export default function ProviderMenuPage() {
       await deleteMeal(mealToDelete.id);
       setDeleteOpen(false);
       setMealToDelete(null);
-      fetchMeals(); // refresh list
+      fetchMeals();
     } catch (err) {
       console.error(err);
     } finally {

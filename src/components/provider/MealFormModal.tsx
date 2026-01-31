@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { createMeal, updateMeal } from "@/src/services/meal.service";
 import { Meal } from "@/src/types/meal";
+import { getCategories } from "@/src/services/admin.category.service";
+import { Category } from "@/src/types/category";
 
 type Props = {
   open: boolean;
@@ -29,6 +31,20 @@ export default function MealFormModal({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch {
+        console.error("Failed to load categories");
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (mode === "edit" && initialData) {
@@ -55,9 +71,12 @@ export default function MealFormModal({
   if (!open) return null;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,22 +85,18 @@ export default function MealFormModal({
     setLoading(true);
 
     try {
+      const payload = {
+        name: formData.name,
+        description: formData.description,
+        price: Number(formData.price),
+        image: formData.image,
+        categoryId: formData.categoryId,
+      };
+
       if (mode === "add") {
-        await createMeal({
-          name: formData.name,
-          description: formData.description,
-          price: Number(formData.price),
-          image: formData.image,
-          categoryId: formData.categoryId,
-        });
+        await createMeal(payload);
       } else if (mode === "edit" && initialData) {
-        await updateMeal(initialData.id, {
-          name: formData.name,
-          description: formData.description,
-          price: Number(formData.price),
-          image: formData.image,
-          categoryId: formData.categoryId,
-        });
+        await updateMeal(initialData.id, payload);
       }
 
       onSuccess();
@@ -142,14 +157,26 @@ export default function MealFormModal({
             required
           />
 
-          <input
-            name="categoryId"
-            placeholder="Category ID"
-            className="w-full rounded border px-3 py-2"
-            value={formData.categoryId}
-            onChange={handleChange}
-            required
-          />
+          {/* Category dropdown */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Category
+            </label>
+            <select
+              name="categoryId"
+              value={formData.categoryId}
+              onChange={handleChange}
+              className="w-full rounded border px-3 py-2"
+              required
+            >
+              <option value="">Select category</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <div className="flex justify-end gap-2 pt-3">
             <button
