@@ -34,8 +34,8 @@ const Navbar = () => {
             Meals
           </Link>
 
-          <Link href="/provider" className="hover:text-indigo-600 transition">
-            Provider 
+          <Link href="/providers" className="hover:text-indigo-600 transition">
+            Providers
           </Link>
 
           {/* User Dropdown */}
