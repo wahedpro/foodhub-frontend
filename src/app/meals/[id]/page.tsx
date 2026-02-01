@@ -6,7 +6,6 @@ const MealDetailsPage = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  // ✅ params কে await করতে হবে
   const { id } = await params;
 
   const meal = await getMealById(id);
@@ -14,8 +13,6 @@ const MealDetailsPage = async ({
   if (!meal) {
     notFound();
   }
-
-  console.log(meal)
 
   return (
     <div className="max-w-4xl mx-auto p-6">
