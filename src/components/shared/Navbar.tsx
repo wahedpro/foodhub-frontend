@@ -34,8 +34,11 @@ const Navbar = () => {
             Meals
           </Link>
 
-          {/* User Dropdown */}
+          <Link href="/provider" className="hover:text-indigo-600 transition">
+            Provider 
+          </Link>
 
+          {/* User Dropdown */}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
