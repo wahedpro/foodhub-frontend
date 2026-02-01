@@ -64,7 +64,10 @@ const Navbar = () => {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
-                  <Settings size={16} /> Track Order
+                  
+                  <Link href="/orders" className="flex items-center gap-2">
+                    <Settings size={16} /> Track Order
+                  </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className=" hover:bg-gray-100 py-1 px-1 rounded-sm">
