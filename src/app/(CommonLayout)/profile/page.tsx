@@ -1,147 +1,151 @@
 "use client";
 
-import { useAuth } from "@/src/providers/AuthProvider";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/src/providers/AuthProvider";
 
-const API_BASE_URL = "http://localhost:4000/api";
+const ProfilePage = () => {
+  const { user, setUser } = useAuth();
+  const router = useRouter();
 
-export default function ProfilePage() {
-  const { user, loading: authLoading } = useAuth();
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
-
+  const [name, setName] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
 
-  // 🔁 Load user info into form
   useEffect(() => {
-    if (user) {
-      setFormData({
-        name: user.name || "",
-        email: user.email || "",
-        phone: "",
-      });
+    if (!user) {
+      router.push("/login");
+    } else {
+      setName(user.name);
     }
-  }, [user]);
+  }, [user, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setMessage("");
+  const updateProfile = async () => {
     setLoading(true);
-
     try {
-      const token = localStorage.getItem("token");
-
-      const res = await fetch(`${API_BASE_URL}/users/me`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ name }),
+        }
+      );
 
       const data = await res.json();
+      if (!res.ok) throw new Error();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Update failed");
-      }
-
-      setMessage("Profile updated successfully!");
-    } catch (err: any) {
-      setError(err.message);
+      setUser(data.data);
+      alert("Profile updated ✅");
+    } catch {
+      alert("Profile update failed");
     } finally {
       setLoading(false);
     }
   };
 
-  if (authLoading) return <p>Loading profile...</p>;
+  const changePassword = async () => {
+    if (!oldPassword || !newPassword) {
+      alert("Fill all password fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/change-password`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            oldPassword,
+            newPassword,
+          }),
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      alert("Password changed successfully 🔐");
+      setOldPassword("");
+      setNewPassword("");
+    } catch (err: any) {
+      alert(err.message || "Password change failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!user) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center py-10">
-      <h1 className="text-2xl font-semibold text-gray-900">Manage Profile</h1>
-      <p className="mt-2 text-gray-600">
-        Update your personal information
-      </p>
+    <div className="max-w-xl mx-auto p-6 space-y-8">
+      <h1 className="text-3xl font-bold">My Profile</h1>
 
-      <div className="mt-5 w-full max-w-md rounded-xl bg-white p-6 border">
-        {/* Messages */}
-        {error && (
-          <p className="mb-3 text-sm text-red-600 bg-red-100 px-3 py-2 rounded">
-            {error}
-          </p>
-        )}
-        {message && (
-          <p className="mb-3 text-sm text-green-600 bg-green-100 px-3 py-2 rounded">
-            {message}
-          </p>
-        )}
+      {/* Profile Info */}
+      <div className="border rounded p-4 space-y-3">
+        <h2 className="font-semibold">Profile Info</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="text-sm text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-            />
-          </div>
+        <input
+          value={user.email}
+          disabled
+          className="w-full border p-2 bg-gray-100 rounded"
+        />
 
-          {/* Email (readonly) */}
-          <div>
-            <label className="text-sm text-gray-700">Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              disabled
-              className="mt-1 w-full rounded border bg-gray-100 px-3 py-2 text-sm cursor-not-allowed"
-            />
-          </div>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full border p-2 rounded"
+          placeholder="Your name"
+        />
 
-          {/* Phone */}
-          <div>
-            <label className="text-sm text-gray-700">Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="01XXXXXXXXX"
-              className="mt-1 w-full rounded border px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-            />
-          </div>
+        <button
+          onClick={updateProfile}
+          disabled={loading}
+          className="w-full bg-green-600 text-white py-2 rounded"
+        >
+          Save Profile
+        </button>
+      </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={loading}
-            className={`mt-4 w-full rounded px-5 py-2 text-sm font-medium text-white
-              ${
-                loading
-                  ? "bg-indigo-400 cursor-not-allowed"
-                  : "bg-indigo-600 hover:bg-indigo-700"
-              }`}
-          >
-            {loading ? "Saving..." : "Save Changes"}
-          </button>
-        </form>
+      {/* Change Password */}
+      <div className="border rounded p-4 space-y-3">
+        <h2 className="font-semibold">Change Password</h2>
+
+        <input
+          type="password"
+          placeholder="Old password"
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+
+        <input
+          type="password"
+          placeholder="New password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+
+        <button
+          onClick={changePassword}
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-2 rounded"
+        >
+          Change Password
+        </button>
       </div>
     </div>
   );
-}
+};
+
+export default ProfilePage;
