@@ -99,3 +99,17 @@ export const deleteMeal = async (mealId: string) => {
 
   return data;
 };
+
+// single meals get by id
+export const getMealById = async (id: string) => {
+  const res = await fetch(`${API_URL}/meals/${id}`, { cache: "no-store" });
+
+  if (res.status === 404) return null;
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch meal");
+  }
+
+  const json = await res.json();
+  return json.data; 
+};
