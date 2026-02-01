@@ -58,7 +58,9 @@ const Navbar = () => {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
-                  <CreditCard size={16} /> Cart
+                  <Link href="/cart" className="flex items-center gap-2">
+                    <CreditCard size={16} /> Cart
+                  </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className="gap-2 cursor-pointer flex items-center hover:bg-gray-100 py-1 px-1 rounded-sm">
