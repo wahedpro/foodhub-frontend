@@ -1,16 +1,25 @@
 "use client";
 
+import { useAuth } from "@/src/providers/AuthProvider";
 import Link from "next/link";
 
 export default function AdminDashboardPage() {
+
+  const {logout} = useAuth()
+
   return (
     <div className="p-6 space-y-8">
       {/* Header */}
-      <div>
+      <div className="flex justify-between">
+        <div>
         <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
         <p className="text-sm text-gray-500 mt-1">
           Overview and quick actions
         </p>
+      </div>
+      <div>
+        <button onClick={logout} className="bg-red-500 px-5 py-2 hover:bg-gray-500 pro">Logout</button>
+      </div>
       </div>
 
       {/* Stats */}
