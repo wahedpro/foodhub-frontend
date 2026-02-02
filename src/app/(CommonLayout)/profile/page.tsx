@@ -10,8 +10,6 @@ const ProfilePage = () => {
   const router = useRouter();
 
   const [name, setName] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,41 +44,6 @@ const ProfilePage = () => {
     }
   };
 
-  const changePassword = async () => {
-    if (!oldPassword || !newPassword) {
-      alert("Fill all password fields");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/change-password`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            oldPassword,
-            newPassword,
-          }),
-        },
-      );
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-      toast.success("Password changed successfully");
-      setOldPassword("");
-      setNewPassword("");
-    } catch (err: any) {
-      toast.success("Password change failed", err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (!user) return null;
 
   return (
@@ -110,35 +73,6 @@ const ProfilePage = () => {
           className="w-full bg-green-600 text-white py-2 rounded"
         >
           Save Profile
-        </button>
-      </div>
-
-      {/* Change Password */}
-      <div className="border rounded p-4 space-y-3">
-        <h2 className="font-semibold">Change Password</h2>
-
-        <input
-          type="password"
-          placeholder="Old password"
-          value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
-          className="w-full border p-2 rounded"
-        />
-
-        <input
-          type="password"
-          placeholder="New password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="w-full border p-2 rounded"
-        />
-
-        <button
-          onClick={changePassword}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded"
-        >
-          Change Password
         </button>
       </div>
     </div>

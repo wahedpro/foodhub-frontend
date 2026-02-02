@@ -31,7 +31,7 @@ export const createMeal = async (
 ) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/v1/provider/meals`, {
+  const res = await fetch(`${API_URL}/provider/meals`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const updateMeal = async (
   const token = localStorage.getItem("token");
 
   const res = await fetch(
-    `${API_URL}/v1/provider/meals/${mealId}`,
+    `${API_URL}/provider/meals/${mealId}`,
     {
       method: "PUT",
       headers: {
@@ -82,7 +82,7 @@ export const deleteMeal = async (mealId: string) => {
   const token = localStorage.getItem("token");
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/v1/provider/meals/${mealId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/provider/meals/${mealId}`,
     {
       method: "DELETE",
       headers: {
