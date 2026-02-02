@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,22 +6,31 @@ import { useAuth } from "@/src/providers/AuthProvider";
 import ProviderProfileModal from "@/src/providers/ProviderProfileModal";
 
 export default function ProviderDashboard() {
-  const { user, setUser } = useAuth(); // ✅ THIS IS THE KEY
+  const { user, setUser } = useAuth(); // GLOBAL user
   const [showModal, setShowModal] = useState(false);
 
+  //  Modal open logic (ONLY when profile is missing)
   useEffect(() => {
-    if (
-      user &&
-      user.role === "PROVIDER" &&
-      !user.providerProfile
-    ) {
+    if (!user) return;
+
+    if (user.role === "PROVIDER" && user.providerProfile === null) {
       setShowModal(true);
+    } else {
+      setShowModal(false);
     }
   }, [user]);
 
-  console.log(user, "provider dashboard user");
+  // optional debug
+  console.log("ProviderDashboard user:", user);
 
-  if (!user) return null; // or loader
+  // user load না হলে কিছু দেখাবো না
+  if (!user) {
+    return (
+      <div className="p-6 text-gray-500">
+        Loading dashboard...
+      </div>
+    );
+  }
 
   return (
     <>
@@ -28,13 +38,13 @@ export default function ProviderDashboard() {
       <ProviderProfileModal
         open={showModal}
         onSuccess={(profile) => {
-          setShowModal(false);
-
-          // ✅ update auth context (GLOBAL)
+          // 🔥 VERY IMPORTANT: update GLOBAL user
           setUser({
             ...user,
             providerProfile: profile,
           });
+
+          setShowModal(false);
         }}
       />
 

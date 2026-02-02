@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/src/providers/AuthProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,6 +21,8 @@ const sidebarLinks = [
 
 export default function ProviderSidebar() {
   const pathname = usePathname();
+
+  const {logout}= useAuth();
 
   return (
     <aside className="w-64 bg-white border-r min-h-screen p-6">
@@ -53,6 +56,7 @@ export default function ProviderSidebar() {
           );
         })}
       </nav>
+      <button type="submit" onClick={logout} className="px-3 py-2 bg-red-500 hover:bg-gray-400">Logout</button>
     </aside>
   );
 }
