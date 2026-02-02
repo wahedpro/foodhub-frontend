@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ProviderProfile } from "../types/user";
 
 const API_BASE_URL = "http://localhost:4000/api";
 
@@ -10,6 +11,7 @@ type User = {
   name: string;
   email: string;
   role: "CUSTOMER" | "PROVIDER" | "ADMIN";
+  providerProfile: ProviderProfile | null;
 };
 
 type AuthContextType = {
