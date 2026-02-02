@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/src/providers/AuthProvider";
+import { toast } from "sonner";
 
 const ProfilePage = () => {
   const { user, setUser } = useAuth();
@@ -24,25 +25,22 @@ const ProfilePage = () => {
   const updateProfile = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({ name }),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ name }),
+      });
 
       const data = await res.json();
       if (!res.ok) throw new Error();
 
       setUser(data.data);
-      alert("Profile updated ✅");
+      toast.success("Profile updated successfully");
     } catch {
-      alert("Profile update failed");
+      toast.error("Profile update failed");
     } finally {
       setLoading(false);
     }
@@ -68,17 +66,16 @@ const ProfilePage = () => {
             oldPassword,
             newPassword,
           }),
-        }
+        },
       );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-
-      alert("Password changed successfully 🔐");
+      toast.success("Password changed successfully");
       setOldPassword("");
       setNewPassword("");
     } catch (err: any) {
-      alert(err.message || "Password change failed");
+      toast.success("Password change failed", err.message);
     } finally {
       setLoading(false);
     }
