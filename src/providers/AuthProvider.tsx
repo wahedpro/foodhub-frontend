@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ProviderProfile } from "../types/user";
 
-const API_BASE_URL = "http://localhost:4000/api";
+const API_BASE_URL = "https://foodhub-backend-1-5fko.onrender.com/api";
 
 type User = {
   id: string;

@@ -30,7 +30,7 @@ export default function ProviderProfileModal({
 
     try {
       const res = await fetch(
-        'http://localhost:4000/api/provider/profile',
+        'https://foodhub-backend-1-5fko.onrender.com/api/provider/profile',
         {
           method: "POST",
           headers: {
