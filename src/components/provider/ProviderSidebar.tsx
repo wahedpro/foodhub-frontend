@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const sidebarLinks = [
   {
-    label: "Dashboard",
+    label: "Menu",
     href: "/provider/menu",
   },
   {

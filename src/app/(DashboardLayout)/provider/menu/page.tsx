@@ -7,6 +7,7 @@ import { Meal } from "@/src/types/meal";
 import MealFormModal from "@/src/components/provider/MealFormModal";
 import DeleteConfirmModal from "@/src/components/provider/DeleteConfirmModal";
 import { deleteMeal } from "@/src/services/meal.service";
+import { useRouter } from "next/navigation";
 
 export default function ProviderMenuPage() {
   const { user } = useAuth();
@@ -22,6 +23,14 @@ export default function ProviderMenuPage() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [mealToDelete, setMealToDelete] = useState<Meal | null>(null);
+
+  const router = useRouter();
+  
+  useEffect(() => {
+      if (!user) {
+        router.push("/login");
+      }
+    }, [user, router]);
 
   // reusable fetch function
   const fetchMeals = useCallback(async () => {

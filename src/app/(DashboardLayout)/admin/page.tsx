@@ -2,9 +2,19 @@
 
 import { useAuth } from "@/src/providers/AuthProvider";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function AdminDashboardPage() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (!user) {
+        router.push("/login");
+      }
+    }, [user, router]);
 
   return (
     <div className="md:p-6 space-y-8">

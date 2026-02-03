@@ -9,6 +9,8 @@ import {
 } from "@/src/services/admin.category.service";
 import { Category } from "@/src/types/category";
 import CategoryModal from "@/src/components/admin/CategoryModal";
+import { useAuth } from "@/src/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -17,6 +19,15 @@ export default function AdminCategoriesPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selected, setSelected] = useState<Category | null>(null);
+
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -51,9 +62,7 @@ export default function AdminCategoriesPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-[#e10101]">
-            Categories
-          </h1>
+          <h1 className="text-2xl font-semibold text-[#e10101]">Categories</h1>
           <p className="text-sm text-gray-500">Manage food categories</p>
         </div>
         <button

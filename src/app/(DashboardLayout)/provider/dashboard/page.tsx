@@ -3,10 +3,19 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/src/providers/AuthProvider";
 import ProviderProfileModal from "@/src/providers/ProviderProfileModal";
+import { useRouter } from "next/navigation";
 
 export default function ProviderDashboard() {
   const { user, setUser } = useAuth(); // GLOBAL user
   const [showModal, setShowModal] = useState(false);
+
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   //  Modal open logic (ONLY when profile is missing)
   useEffect(() => {
@@ -18,9 +27,6 @@ export default function ProviderDashboard() {
       setShowModal(false);
     }
   }, [user]);
-
-  // optional debug
-  console.log("ProviderDashboard user:", user);
 
   // user load check
   if (!user) {

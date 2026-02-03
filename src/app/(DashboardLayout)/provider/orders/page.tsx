@@ -1,10 +1,22 @@
 "use client";
 
+import { useAuth } from "@/src/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function ProviderOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
+
+
+  const { user } = useAuth();
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (!user) {
+        router.push("/login");
+      }
+    }, [user, router]);
 
   useEffect(() => {
     fetchOrders();

@@ -1,11 +1,20 @@
 "use client";
 
+import { useAuth } from "@/src/providers/AuthProvider";
 import { useCart } from "@/src/providers/CartContext";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const CartPage = () => {
+  const { user } = useAuth();
   const { state, dispatch } = useCart();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   const totalPrice = state.items.reduce(
     (sum: number, item: any) => sum + item.price * item.quantity,
@@ -28,14 +37,12 @@ const CartPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto py-6 px-2">
-       <div className="text-center mb-12">
-          <h2 className="text-3xl font-semibold text-gray-900">
-            Your Cart
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Review and manage your selected meals
-          </p>
-        </div>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-semibold text-gray-900">Your Cart</h2>
+        <p className="mt-2 text-gray-600">
+          Review and manage your selected meals
+        </p>
+      </div>
 
       <div className="space-y-4">
         {state.items.map((item: any) => (
@@ -51,7 +58,9 @@ const CartPage = () => {
               />
 
               <div>
-                <h3 className="font-semibold text-sm md:text-xl">{item.name}</h3>
+                <h3 className="font-semibold text-sm md:text-xl">
+                  {item.name}
+                </h3>
                 <p className="text-gray-500">৳ {item.price}</p>
               </div>
             </div>

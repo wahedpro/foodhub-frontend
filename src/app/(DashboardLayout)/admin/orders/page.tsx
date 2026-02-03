@@ -1,10 +1,22 @@
 "use client";
 
+import { useAuth } from "@/src/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+
+  const { user } = useAuth();
+  const router = useRouter();
+  
+    useEffect(() => {
+      if (!user) {
+        router.push("/login");
+      }
+    }, [user, router]);
 
   useEffect(() => {
     fetchOrders();

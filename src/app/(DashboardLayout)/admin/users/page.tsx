@@ -3,11 +3,22 @@
 import { useEffect, useState } from "react";
 import { getAllUsers, updateUserStatus } from "@/src/services/admin.user.service";
 import { User } from "@/src/types/user";
+import { useAuth } from "@/src/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  const { user } = useAuth();
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (!user) {
+        router.push("/login");
+      }
+    }, [user, router]);
 
   const fetchUsers = async () => {
     try {
