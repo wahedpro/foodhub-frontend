@@ -116,7 +116,7 @@ export default function RegisterPage() {
               ${
                 loading
                   ? "bg-indigo-400 cursor-not-allowed"
-                  : "bg-indigo-600 hover:bg-indigo-700"
+                  : "bg-[#e10101] hover:bg-[#99040d]"
               }`}
           >
             {loading ? "Creating account..." : "Register"}
@@ -125,7 +125,7 @@ export default function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href="/login" className="text-indigo-600 hover:underline">
+          <Link href="/login" className="text-[#e10101] hover:underline">
             Login
           </Link>
         </p>

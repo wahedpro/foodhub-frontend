@@ -190,7 +190,7 @@ export default function MealFormModal({
             <button
               type="submit"
               disabled={loading}
-              className="rounded bg-indigo-600 px-4 py-2 text-white"
+              className="rounded bg-[#e10101] px-4 py-2 text-white hover:bg-[#99040d]"
             >
               {loading
                 ? "Saving..."

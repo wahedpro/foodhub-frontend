@@ -18,7 +18,7 @@ const CartPage = () => {
         <h2 className="text-2xl font-bold mb-4">Your cart is empty 🛒</h2>
         <button
           onClick={() => router.push("/meals")}
-          className="px-4 py-2 bg-orange-500 text-white rounded"
+          className="px-4 py-2 bg-[#e10101] text-white rounded hover:bg-[#99040d]"
         >
           Browse Meals
         </button>
@@ -27,14 +27,21 @@ const CartPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+    <div className="max-w-4xl mx-auto py-6 px-2">
+       <div className="text-center mb-12">
+          <h2 className="text-3xl font-semibold text-gray-900">
+            Your Cart
+          </h2>
+          <p className="mt-2 text-gray-600">
+            Review and manage your selected meals
+          </p>
+        </div>
 
       <div className="space-y-4">
         {state.items.map((item: any) => (
           <div
             key={item.mealId}
-            className="flex items-center justify-between border p-4 rounded"
+            className="flex items-center justify-between border p-2 rounded"
           >
             <div className="flex items-center gap-4">
               <img
@@ -44,7 +51,7 @@ const CartPage = () => {
               />
 
               <div>
-                <h3 className="font-semibold">{item.name}</h3>
+                <h3 className="font-semibold text-sm md:text-xl">{item.name}</h3>
                 <p className="text-gray-500">৳ {item.price}</p>
               </div>
             </div>
@@ -91,7 +98,7 @@ const CartPage = () => {
 
         <button
           onClick={() => router.push("/checkout")}
-          className="px-6 py-2 bg-green-600 text-white rounded"
+          className="px-6 py-2 bg-[#e10101] text-white rounded hover:bg-[#99040d]"
         >
           Proceed to Checkout
         </button>

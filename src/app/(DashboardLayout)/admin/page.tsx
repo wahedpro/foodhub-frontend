@@ -4,22 +4,26 @@ import { useAuth } from "@/src/providers/AuthProvider";
 import Link from "next/link";
 
 export default function AdminDashboardPage() {
-
-  const {logout} = useAuth()
+  const { logout } = useAuth();
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="md:p-6 space-y-8">
       {/* Header */}
       <div className="flex justify-between">
         <div>
-        <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          Overview and quick actions
-        </p>
-      </div>
-      <div>
-        <button onClick={logout} className="bg-red-500 px-5 py-2 hover:bg-gray-500 pro">Logout</button>
-      </div>
+          <h1 className="text-2xl font-semibold text-[#e10101]">
+            Admin Dashboard
+          </h1>
+          <p className="text-sm text-gray-500">Overview and quick actions</p>
+        </div>
+        <div>
+          <button
+            onClick={logout}
+            className="bg-[#e10101] text-white px-8 py-2 rounded-sm hover:bg-[#99040d]"
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -32,9 +36,7 @@ export default function AdminDashboardPage() {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-lg font-semibold mb-4">
-          Quick Actions
-        </h2>
+        <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <ActionCard
@@ -60,23 +62,11 @@ export default function AdminDashboardPage() {
   );
 }
 
-/* =========================
-   Reusable Components
-========================= */
-
-function StatCard({
-  title,
-  value,
-}: {
-  title: string;
-  value: string;
-}) {
+function StatCard({ title, value }: { title: string; value: string }) {
   return (
     <div className="rounded border bg-white p-4">
       <p className="text-sm text-gray-500">{title}</p>
-      <p className="mt-2 text-2xl font-semibold">
-        {value}
-      </p>
+      <p className="mt-2 text-2xl font-semibold">{value}</p>
     </div>
   );
 }
@@ -96,9 +86,7 @@ function ActionCard({
       className="rounded border bg-white p-5 hover:shadow-sm transition"
     >
       <h3 className="font-medium">{title}</h3>
-      <p className="mt-1 text-sm text-gray-500">
-        {description}
-      </p>
+      <p className="mt-1 text-sm text-gray-500">{description}</p>
     </Link>
   );
 }

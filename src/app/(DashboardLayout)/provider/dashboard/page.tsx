@@ -22,7 +22,7 @@ export default function ProviderDashboard() {
   // optional debug
   console.log("ProviderDashboard user:", user);
 
-  // user load না হলে কিছু দেখাবো না
+  // user load check
   if (!user) {
     return <div className="p-6 text-gray-500">Loading dashboard...</div>;
   }
@@ -33,7 +33,7 @@ export default function ProviderDashboard() {
       <ProviderProfileModal
         open={showModal}
         onSuccess={(profile) => {
-          // 🔥 VERY IMPORTANT: update GLOBAL user
+          //  VERY IMPORTANT: update GLOBAL user
           setUser({
             ...user,
             providerProfile: user.providerProfile ?? null,
@@ -45,13 +45,7 @@ export default function ProviderDashboard() {
 
       {/* Dashboard content */}
       <div>
-        <h1 className="text-2xl font-semibold mb-6">Provider Dashboard</h1>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Stat title="Total Meals" value="12" />
-          <Stat title="Pending Orders" value="5" />
-          <Stat title="Completed Orders" value="48" />
-        </div>
+        <h1 className="text-3xl font-bold mb-6">Provider Dashboard</h1>
       </div>
     </>
   );

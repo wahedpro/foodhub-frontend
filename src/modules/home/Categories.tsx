@@ -4,29 +4,29 @@ const categories = [
   {
     id: 1,
     name: "Burger",
-    image:"https://images.unsplash.com/photo-1550547660-d9450f859349",
+    image: "https://images.unsplash.com/photo-1550547660-d9450f859349",
   },
   {
     id: 2,
-    name: "Pizza",
-    image:"https://images.unsplash.com/photo-1550547660-d9450f859349",
+    name: "Chillys",
+    image: "https://images.deliveryhero.io/image/fd-bd/LH/s7rt-listing.jpg",
   },
   {
     id: 3,
     name: "Chinese",
-    image:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
   },
   {
     id: 4,
-    name: "Deshi",
-    image:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    name: "Snacks",
+    image: "https://images.deliveryhero.io/image/fd-bd/LH/qovd-listing.jpg",
   },
 ];
 
 const Categories = () => {
   return (
-    <section className="bg-white py-20">
-      <div className="mx-auto max-w-7xl px-4">
+    <section className="bg-white py-10">
+      <div className="mx-auto w-[90%]">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-semibold text-gray-900">
@@ -53,9 +53,7 @@ const Categories = () => {
                 />
               </div>
               <div className="p-4 text-center">
-                <h3 className="font-medium text-gray-800">
-                  {category.name}
-                </h3>
+                <h3 className="font-medium text-gray-800">{category.name}</h3>
               </div>
             </Link>
           ))}

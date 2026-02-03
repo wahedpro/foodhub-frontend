@@ -96,7 +96,7 @@ export default function ProviderMenuPage() {
         <h1 className="text-2xl font-semibold">My Menu</h1>
         <button
           onClick={openAddModal}
-          className="rounded bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700"
+          className="rounded bg-[#e10101] px-4 py-2 text-sm text-white hover:bg-[#99040d]"
         >
           + Add Meal
         </button>
@@ -160,7 +160,7 @@ export default function ProviderMenuPage() {
         </div>
       )}
 
-      {/* ✅ MODAL MUST BE INSIDE JSX */}
+      {/* MODAL MUST BE INSIDE JSX */}
       <MealFormModal
         open={modalOpen}
         mode={mode}

@@ -81,7 +81,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded bg-indigo-600 py-2 text-white"
+            className="w-full rounded bg-[#e10101] py-2 text-white hover:bg-[#99040d]"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
@@ -89,7 +89,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm">
           Don’t have an account?{" "}
-          <Link href="/register" className="text-indigo-600">
+          <Link href="/register" className="text-[#e10101] hover:underline">
             Register
           </Link>
         </p>

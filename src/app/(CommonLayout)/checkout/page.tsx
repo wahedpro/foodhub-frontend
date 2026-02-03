@@ -18,7 +18,7 @@ const CheckoutPage = () => {
     0
   );
 
-  // 🔐 Guard
+  //  Guard
   if (!user) {
     router.push("/login");
     return null;
@@ -62,10 +62,10 @@ const CheckoutPage = () => {
 
       const data = await res.json();
 
-      // ✅ Clear cart after success
+      //  Clear cart after success
       dispatch({ type: "CLEAR" });
 
-      // ✅ Redirect to order tracking / success page
+      //  Redirect to order tracking / success page
       router.push(`/orders/${data.id}`);
     } catch (error) {
       alert("Failed to place order");
@@ -76,7 +76,14 @@ const CheckoutPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+       <div className="text-center mb-12">
+          <h2 className="text-3xl font-semibold text-gray-900">
+            Checkout
+          </h2>
+          <p className="mt-2 text-gray-600">
+            Complete your order and enjoy delicious meals
+          </p>
+        </div>
 
       {/* Address */}
       <div className="mb-6">

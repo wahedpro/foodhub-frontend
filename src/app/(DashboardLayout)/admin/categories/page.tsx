@@ -47,17 +47,22 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="md:p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold">Manage Categories</h1>
+        <div>
+          <h1 className="text-2xl font-semibold text-[#e10101]">
+            Categories
+          </h1>
+          <p className="text-sm text-gray-500">Manage food categories</p>
+        </div>
         <button
           onClick={() => {
             setMode("add");
             setSelected(null);
             setModalOpen(true);
           }}
-          className="rounded bg-indigo-600 px-4 py-2 text-sm text-white"
+          className="rounded bg-[#e10101] hover:bg-[#99040d] px-4 py-2 text-sm text-white"
         >
           + Add Category
         </button>

@@ -11,9 +11,9 @@ const featuredMeals = [
   {
     id: 2,
     name: "Pepperoni Pizza",
-    price: 499,
+    price: 250,
     image:
-      "https://images.unsplash.com/photo-1548365328-8b849e6e9c2a",
+      "https://images.deliveryhero.io/image/fd-bd/LH/rhs5-listing.jpg",
   },
   {
     id: 3,
@@ -24,17 +24,17 @@ const featuredMeals = [
   },
   {
     id: 4,
-    name: "Deshi Kacchi",
-    price: 699,
+    name: "Biryani Rice",
+    price: 350,
     image:
-      "https://images.unsplash.com/photo-1604908554168-0c2b71f4c7c5",
+      "https://images.deliveryhero.io/image/fd-bd/LH/v0m6-listing.jpg",
   },
 ];
 
 const FeaturedMeals = () => {
   return (
     <section className="bg-gray-50 py-20">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto w-[90%]">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
           <div>
@@ -59,7 +59,7 @@ const FeaturedMeals = () => {
           {featuredMeals.map((meal) => (
             <div
               key={meal.id}
-              className="rounded-xl bg-white border shadow-sm hover:shadow-md transition overflow-hidden"
+              className="rounded-xl bg-white border hover:shadow-sm transition overflow-hidden"
             >
               <img
                 src={meal.image}
@@ -67,7 +67,7 @@ const FeaturedMeals = () => {
                 className="h-44 w-full object-cover"
               />
 
-              <div className="p-4">
+              <div className="p-4 flex items-center justify-between">
                 <h3 className="font-semibold text-gray-800">
                   {meal.name}
                 </h3>
@@ -76,13 +76,6 @@ const FeaturedMeals = () => {
                   <p className="text-indigo-600 font-medium">
                     ৳ {meal.price}
                   </p>
-
-                  <Link
-                    href={`/meals/${meal.id}`}
-                    className="text-sm text-indigo-600 hover:underline"
-                  >
-                    View
-                  </Link>
                 </div>
               </div>
             </div>

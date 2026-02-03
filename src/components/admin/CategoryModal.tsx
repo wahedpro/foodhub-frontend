@@ -61,7 +61,7 @@ export default function CategoryModal({
             <button
               type="submit"
               disabled={loading}
-              className="rounded bg-indigo-600 px-4 py-2 text-sm text-white"
+              className="rounded bg-[#e10101] hover:bg-[#99040d] px-4 py-2 text-sm text-white"
             >
               {loading ? "Saving..." : "Save"}
             </button>

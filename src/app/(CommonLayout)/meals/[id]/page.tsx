@@ -1,73 +1,3 @@
-// // import { getMealById } from "@/src/services/meal.service";
-// // import { notFound } from "next/navigation";
-
-// // const MealDetailsPage = async ({
-// //   params,
-// // }: {
-// //   params: Promise<{ id: string }>;
-// // }) => {
-// //   const { id } = await params;
-// //   const meal = await getMealById(id);
-// //   if (!meal) {
-// //     notFound();
-// //   }
-
-// //   return (
-// //     <div className="max-w-4xl mx-auto p-6">
-// //       <img
-// //         src={meal.image}
-// //         alt={meal.name}
-// //         className="w-full h-64 object-cover rounded mb-4"
-// //       />
-
-// //       <h1 className="text-3xl font-bold">{meal.name}</h1>
-// //       <p className="text-gray-600">{meal.description}</p>
-// //       <p className="font-bold mt-2">৳ {meal.price}</p>
-// //       <button className="px-3 py-2 bg-gray-300">Add to Cart</button>
-// //     </div>
-// //   );
-// // };
-
-// // export default MealDetailsPage;
-
-// import { getMealById } from "@/src/services/meal.service";
-// import { notFound } from "next/navigation";
-// import AddToCartButton from "./AddToCartButton";
-
-// const MealDetailsPage = async ({
-//   params,
-// }: {
-//   params: Promise<{ id: string }>;
-// }) => {
-//   const { id } = await params;
-
-//   const meal = await getMealById(id);
-
-//   if (!meal) {
-//     notFound();
-//   }
-
-//   console.log(meal, "line 50")
-
-//   return (
-//     <div className="max-w-4xl mx-auto p-6">
-//       <img
-//         src={meal.image}
-//         alt={meal.name}
-//         className="w-full h-64 object-cover rounded mb-4"
-//       />
-
-//       <h1 className="text-3xl font-bold">{meal.name}</h1>
-//       <p className="text-gray-600 mt-2">{meal.description}</p>
-//       <p className="font-bold text-xl mt-3">৳ {meal.price}</p>
-
-//       <AddToCartButton meal={meal} />
-//     </div>
-//   );
-// };
-
-// export default MealDetailsPage;
-
 import { getMealById } from "@/src/services/meal.service";
 import { notFound } from "next/navigation";
 import AddToCartButton from "./AddToCartButton";
@@ -89,10 +19,8 @@ const MealDetailsPage = async ({
   const avgRating =
     reviews.length > 0
       ? (
-          reviews.reduce(
-            (sum: number, r: any) => sum + r.rating,
-            0
-          ) / reviews.length
+          reviews.reduce((sum: number, r: any) => sum + r.rating, 0) /
+          reviews.length
         ).toFixed(1)
       : null;
 
@@ -107,26 +35,18 @@ const MealDetailsPage = async ({
         />
 
         <div>
-          <h1 className="text-3xl font-bold mb-2">
-            {meal.name}
-          </h1>
+          <h1 className="text-3xl font-bold mb-2">{meal.name}</h1>
 
           {avgRating && (
             <div className="flex items-center gap-2 mb-2">
               <StarRating rating={Math.round(Number(avgRating))} />
-              <span className="text-sm text-gray-500">
-                ({avgRating} / 5)
-              </span>
+              <span className="text-sm text-gray-500">({avgRating} / 5)</span>
             </div>
           )}
 
-          <p className="text-gray-600 mb-4">
-            {meal.description}
-          </p>
+          <p className="text-gray-600 mb-4">{meal.description}</p>
 
-          <p className="text-2xl font-bold mb-4">
-            ৳ {meal.price}
-          </p>
+          <p className="text-2xl font-bold mb-4">৳ {meal.price}</p>
 
           <AddToCartButton meal={meal} />
         </div>
@@ -134,9 +54,7 @@ const MealDetailsPage = async ({
 
       {/* Reviews Section */}
       <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Customer Reviews
-        </h2>
+        <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
 
         {reviews.length === 0 && (
           <p className="text-gray-500">
@@ -146,15 +64,10 @@ const MealDetailsPage = async ({
 
         <div className="space-y-4">
           {reviews.map((review: any) => (
-            <div
-              key={review.id}
-              className="border rounded p-4"
-            >
+            <div key={review.id} className="border rounded p-4">
               <StarRating rating={review.rating} />
 
-              <p className="mt-2 text-gray-700">
-                {review.comment}
-              </p>
+              <p className="mt-2 text-gray-700">{review.comment}</p>
 
               <p className="text-sm text-gray-400 mt-1">
                 {new Date(review.createdAt).toLocaleString()}

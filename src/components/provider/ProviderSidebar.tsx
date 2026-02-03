@@ -7,10 +7,6 @@ import { usePathname } from "next/navigation";
 const sidebarLinks = [
   {
     label: "Dashboard",
-    href: "/provider/dashboard",
-  },
-  {
-    label: "Menu",
     href: "/provider/menu",
   },
   {
@@ -28,14 +24,14 @@ export default function ProviderSidebar() {
     <aside className="w-64 bg-white border-r min-h-screen p-6">
       {/* Logo / Title */}
       <div className="mb-10">
-        <h1 className="text-2xl font-bold text-indigo-600">
+        <h1 className="text-2xl font-bold text-[#e10101]">
           FoodHub
         </h1>
         <p className="text-xs text-gray-500">Provider Panel</p>
       </div>
 
       {/* Navigation */}
-      <nav className="space-y-2">
+      <nav className="space-y-2 mb-10">
         {sidebarLinks.map((link) => {
           const isActive = pathname === link.href;
 
@@ -46,8 +42,8 @@ export default function ProviderSidebar() {
               className={`block rounded px-4 py-2 text-sm font-medium transition
                 ${
                   isActive
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                    ? "bg-[#e10101] text-white"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 }
               `}
             >
@@ -56,7 +52,7 @@ export default function ProviderSidebar() {
           );
         })}
       </nav>
-      <button type="submit" onClick={logout} className="px-3 py-2 bg-red-500 hover:bg-gray-400">Logout</button>
+      <button type="submit" onClick={logout} className="px-3 py-2 w-full rounded-2xl bg-[#e10101] text-white hover:bg-[#99040d]">Logout</button>
     </aside>
   );
 }

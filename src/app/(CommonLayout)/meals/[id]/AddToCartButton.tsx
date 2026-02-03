@@ -18,7 +18,7 @@ const AddToCartButton = ({ meal }: { meal: Meal }) => {
   const router = useRouter();
 
   const handleAddToCart = () => {
-    // 🔐 Login required
+    // Login required
     if (!user) {
       router.push("/login");
       return;
@@ -40,7 +40,7 @@ const AddToCartButton = ({ meal }: { meal: Meal }) => {
   return (
     <button
       onClick={handleAddToCart}
-      className="mt-5 px-6 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+      className="mt-5 px-6 py-2 bg-[#e10101] text-white rounded hover:bg-[#99040d]"
     >
       Add to Cart
     </button>

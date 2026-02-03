@@ -47,8 +47,15 @@ const ProfilePage = () => {
   if (!user) return null;
 
   return (
-    <div className="max-w-xl mx-auto p-6 space-y-8">
-      <h1 className="text-3xl font-bold">My Profile</h1>
+    <div className="max-w-xl mx-auto py-8 space-y-8">
+       <div className="text-center mb-12">
+          <h2 className="text-3xl font-semibold text-gray-900">
+            My Profile
+          </h2>
+          <p className="mt-2 text-gray-600">
+            Manage your profile information
+          </p>
+        </div>
 
       {/* Profile Info */}
       <div className="border rounded p-4 space-y-3">
@@ -70,7 +77,7 @@ const ProfilePage = () => {
         <button
           onClick={updateProfile}
           disabled={loading}
-          className="w-full bg-green-600 text-white py-2 rounded"
+          className="w-full bg-[#e10101] text-white py-2 rounded hover:bg-[#99040d]"
         >
           Save Profile
         </button>

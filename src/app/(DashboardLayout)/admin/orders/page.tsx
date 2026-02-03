@@ -35,10 +35,13 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-6">
-        All Orders
-      </h1>
+    <div className="md:p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold text-[#e10101]">All Orders</h1>
+        <p className="text-sm text-gray-500 mt-1">
+          View all orders and manage their status
+        </p>
+      </div>
 
       <div className="space-y-4">
         {orders.map((order) => (
