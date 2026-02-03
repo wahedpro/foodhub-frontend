@@ -11,4 +11,5 @@ export interface User {
   email: string;
   role: "CUSTOMER" | "PROVIDER" | "ADMIN";
   providerProfile?: ProviderProfile | null;
+  isActive?: boolean;
 }
