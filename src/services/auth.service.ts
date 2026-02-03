@@ -23,7 +23,7 @@ export const loginUser = async (
   payload: LoginPayload
 ): Promise<LoginResponse> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+    `${API_BASE_URL}/auth/login`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
