@@ -2,17 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ProviderProfile } from "../types/user";
+import { ProviderProfile, User } from "../types/user";
 
 const API_BASE_URL = "https://foodhub-backend-1-5fko.onrender.com/api";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: "CUSTOMER" | "PROVIDER" | "ADMIN";
-  providerProfile: ProviderProfile | null;
-};
+
 
 type AuthContextType = {
   user: User | null;

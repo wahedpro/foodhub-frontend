@@ -10,5 +10,5 @@ export interface User {
   name: string;
   email: string;
   role: "CUSTOMER" | "PROVIDER" | "ADMIN";
-  providerProfile: ProviderProfile | null;
+  providerProfile?: ProviderProfile | null;
 }
